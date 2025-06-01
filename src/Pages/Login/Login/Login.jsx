@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import AuthForm from '../../../components/AuthForm/AuthForm';
+import AuthForm from '../../../components/AuthForm/AuthForm/AuthForm';
 import InputField from '../../components/InputField/InputField';
 import Button from '../../components/Button/Button';
 import { useAuth } from '../../hooks/useAuth';
