@@ -1,25 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import AuthForm from '../../components/AuthForm';
-import Button from '../../components/Button/Button';
-import InputField from '../../components/InputField/InputField';
 import { useAuth } from '../../hooks/useAuth';
 import './Login.css';
-
-
-console.log("=== COMPONENT IMPORTS DEBUG ===");
-console.log("AuthForm:", AuthForm);
-console.log("AuthForm type:", typeof AuthForm);
-console.log("AuthForm default:", AuthForm?.default);
-console.log("InputField:", InputField);
-console.log("InputField type:", typeof InputField);
-console.log("InputField default:", InputField?.default);
-console.log("Button:", Button);
-console.log("Button type:", typeof Button);
-console.log("Button default:", Button?.default);
-console.log("=== END DEBUG ===");
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +11,8 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -92,81 +77,103 @@ const Login = () => {
     }
   };
 
-  // Test if components are valid before rendering
-  if (typeof AuthForm !== 'function') {
-    console.error('AuthForm is not a function:', AuthForm);
-    return <div>Error: AuthForm component failed to load</div>;
-  }
-  
-  if (typeof InputField !== 'function') {
-    console.error('InputField is not a function:', InputField);
-    return <div>Error: InputField component failed to load</div>;
-  }
-  
-  if (typeof Button !== 'function') {
-    console.error('Button is not a function:', Button);
-    return <div>Error: Button component failed to load</div>;
-  }
-
   return (
-    <AuthForm 
-      title="Sign in to your account"
-      subtitle="Welcome back! Please sign in to continue."
-    >
-      <form onSubmit={handleSubmit} className="login-form" noValidate>
-        <InputField
-          type="text"
-          name="username"
-          label="Username"
-          placeholder="Enter your username"
-          value={formData.username}
-          onChange={handleChange}
-          error={errors.username}
-          required
-          icon={<span role="img" aria-label="user">👤</span>}  
-        />
-        
-        <InputField
-          type="password"
-          name="password"
-          label="Password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          required
-          icon={<span role="img" aria-label="lock">🔒</span>}  
-        />
-        
-        <div className="form-options">
-          <label htmlFor="rememberMe" className="remember-me">
-            <input type="checkbox" id="rememberMe" name="rememberMe" />
-            <span>Remember me</span>
-          </label>
-          <Link to="/forgot-password" className="forgot-password">
-            Forgot password?
-          </Link>
+    <div className="login-container">
+      <div className="login-content">
+        <div className="login-form-section">
+          <div className="login-header">
+            <div className="brand">
+              <div className="brand-icon"></div>
+              <span className="brand-text">Anywhere app.</span>
+            </div>
+            <nav className="nav-links">
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/login" className="nav-link active">Sign In</Link>
+            </nav>
+          </div>
+          
+          <div className="form-container">
+            <div className="form-header">
+              <p className="form-subtitle">WELCOME BACK</p>
+              <h1 className="form-title">Log in to your account.</h1>
+              <p className="form-switch">
+                Don't have an account? <Link to="/signup" className="signup-link">Create account</Link>
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="login-form" noValidate>
+              <div className="input-group">
+                <label className="input-label">Username</label>
+                <div className="input-wrapper">
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className={`form-input ${errors.username ? 'error' : ''}`}
+                  />
+                  <span className="input-icon">👤</span>
+                </div>
+                {errors.username && <span className="error-text">{errors.username}</span>}
+              </div>
+              
+              <div className="input-group">
+                <label className="input-label">Password</label>
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={`form-input ${errors.password ? 'error' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    👁️
+                  </button>
+                </div>
+                {errors.password && <span className="error-text">{errors.password}</span>}
+              </div>
+              
+              <div className="form-options">
+                <label className="remember-me">
+                  <input 
+                    type="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <span className="checkmark"></span>
+                  <span>Remember me</span>
+                </label>
+                <Link to="/forgot-password" className="forgot-password">
+                  Forgot password?
+                </Link>
+              </div>
+              
+              <button
+                type="submit"
+                className="sign-in-btn"
+                disabled={loading}
+              >
+                {loading ? 'Signing In...' : 'Sign In'}
+              </button>
+            </form>
+          </div>
         </div>
         
-        <Button
-          type="submit"
-          loading={loading}
-          fullWidth
-          size="large"
-        >
-          Sign In
-        </Button>
-        
-        <div className="auth-switch">
-          <p>
-            Don't have an account?{' '}
-            <Link to="/signup" className="auth-link">
-              Create account
-            </Link>
-          </p>
+        <div className="login-image-section">
+          <div className="mountain-image"></div>
+          <div className="logo-overlay">
+            <div className="logo-symbol">≡</div>
+          </div>
         </div>
-      </form>
-    </AuthForm>
+      </div>
+    </div>
   );
 };
 

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import AuthForm from '../../components/AuthForm/AuthForm';
-import InputField from '../../components/InputField/InputField';
-import Button from '../../components/Button/Button';
 import { useAuth } from '../../hooks/useAuth';
 import './Signup.css';
 
@@ -17,6 +14,7 @@ const Signup = () => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -58,8 +56,6 @@ const Signup = () => {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, and number';
     }
     
     if (!formData.confirmPassword) {
@@ -103,104 +99,125 @@ const Signup = () => {
   };
 
   return (
-    <AuthForm 
-      title="Create new account"
-      subtitle="Start for free"
-    >
-      <form onSubmit={handleSubmit} className="signup-form">
-        <div className="name-fields">
-          <InputField
-            type="text"
-            name="firstName"
-            label="First Name"
-            placeholder="Michal"
-            value={formData.firstName}
-            onChange={handleChange}
-            error={errors.firstName}
-            required
-            icon="👤"
-          />
+    <div className="signup-container">
+      <div className="signup-content">
+        <div className="signup-form-section">
+          <div className="signup-header">
+            <div className="brand">
+              <div className="brand-icon"></div>
+              <span className="brand-text">Anywhere app.</span>
+            </div>
+            <nav className="nav-links">
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/join" className="nav-link active">Join</Link>
+            </nav>
+          </div>
           
-          <InputField
-            type="text"
-            name="lastName"
-            label="Last Name"
-            placeholder="Masiak"
-            value={formData.lastName}
-            onChange={handleChange}
-            error={errors.lastName}
-            required
-            icon="👤"
-          />
+          <div className="form-container">
+            <div className="form-header">
+              <p className="form-subtitle">START FOR FREE</p>
+              <h1 className="form-title">Create new account.</h1>
+              <p className="form-switch">
+                Already A Member? <Link to="/login" className="login-link">Log In</Link>
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="signup-form">
+              <div className="name-row">
+                <div className="input-group">
+                  <label className="input-label">First name</label>
+                  <div className="input-wrapper">
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className={`form-input ${errors.firstName ? 'error' : ''}`}
+                    />
+                    <span className="input-icon">👤</span>
+                  </div>
+                  {errors.firstName && <span className="error-text">{errors.firstName}</span>}
+                </div>
+                
+                <div className="input-group">
+                  <label className="input-label">Last name</label>
+                  <div className="input-wrapper">
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={`form-input ${errors.lastName ? 'error' : ''}`}
+                    />
+                    <span className="input-icon">👤</span>
+                  </div>
+                  {errors.lastName && <span className="error-text">{errors.lastName}</span>}
+                </div>
+              </div>
+              
+              <div className="input-group">
+                <label className="input-label">Email</label>
+                <div className="input-wrapper">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`form-input ${errors.email ? 'error' : ''}`}
+                  />
+                  <span className="input-icon">✉️</span>
+                </div>
+                {errors.email && <span className="error-text">{errors.email}</span>}
+              </div>
+              
+              <div className="input-group">
+                <label className="input-label">Password</label>
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter the password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={`form-input ${errors.password ? 'error' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    👁️
+                  </button>
+                </div>
+                {errors.password && <span className="error-text">{errors.password}</span>}
+              </div>
+              
+              <div className="form-options">
+                <p className="change-method">Change method</p>
+              </div>
+              
+              <button
+                type="submit"
+                className="create-account-btn"
+                disabled={loading}
+              >
+                {loading ? 'Creating...' : 'Create account'}
+              </button>
+            </form>
+          </div>
         </div>
         
-        <InputField
-          type="email"
-          name="email"
-          label="Email"
-          placeholder="michal.masiak@anywhere.co"
-          value={formData.email}
-          onChange={handleChange}
-          error={errors.email}
-          required
-          icon="✉️"
-        />
-        
-        <InputField
-          type="password"
-          name="password"
-          label="Password"
-          placeholder="Create a strong password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          required
-          icon="🔒"
-        />
-        
-        <InputField
-          type="password"
-          name="confirmPassword"
-          label="Confirm Password"
-          placeholder="Confirm your password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          error={errors.confirmPassword}
-          required
-          icon="🔒"
-        />
-        
-        <div className="form-options">
-          <label className="terms-agreement">
-            <input type="checkbox" required />
-            <span>
-              I agree to the{' '}
-              <Link to="/terms" className="terms-link">Terms of Service</Link>
-              {' '}and{' '}
-              <Link to="/privacy" className="terms-link">Privacy Policy</Link>
-            </span>
-          </label>
+        <div className="signup-image-section">
+          <div className="mountain-image"></div>
+          <div className="logo-overlay">
+            <div className="logo-symbol">≡</div>
+          </div>
         </div>
-        
-        <Button
-          type="submit"
-          loading={loading}
-          fullWidth
-          size="large"
-        >
-          Create account
-        </Button>
-        
-        <div className="auth-switch">
-          <p>
-            Already a member?{' '}
-            <Link to="/login" className="auth-link">
-              Log In
-            </Link>
-          </p>
-        </div>
-      </form>
-    </AuthForm>
+      </div>
+    </div>
   );
 };
 
