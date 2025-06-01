@@ -44,20 +44,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (userData) => {
-    try {
-      const response = await authService.signup(userData);
-      return { success: true, data: response };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  };
-
   const logout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
     setUser(null);
   };
+ const signup = async (userData) => {
+  try {
+    const response = await authService.signup(userData);
+    const { token, ...userData } = response; // Assuming same response structure as login
+    
+    // Store token/user data if needed (like login does)
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('userData', JSON.stringify(userData));
+    setUser(userData);
+    
+    // Return success with the full response
+    return { 
+      success: true, 
+      data: response,
+      message: 'Account created successfully!' 
+    };
+  } catch (error) {
+    return { 
+      success: false, 
+      error: error.response?.data?.message || error.message 
+    };
+  }
+};
 
   const value = {
     user,

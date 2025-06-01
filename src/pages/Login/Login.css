@@ -309,8 +309,8 @@
   bottom: 0;
   background-image: linear-gradient(
     135deg,
-    rgba(6, 182, 212, 0.8) 0%,
-    rgba(14, 165, 233, 0.8) 100%
+    rgba(6, 182, 212, 0.001) 0%,
+    rgba(14, 165, 233, 0.001) 100%
   ),
   url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><linearGradient id="mountains" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23065f46;stop-opacity:0.3"/><stop offset="50%" style="stop-color:%23047857;stop-opacity:0.4"/><stop offset="100%" style="stop-color:%23064e3b;stop-opacity:0.5"/></linearGradient></defs><path d="M0,600 L0,400 L100,300 L200,350 L300,250 L400,200 L500,300 L600,180 L700,250 L800,200 L800,600 Z" fill="url(%23mountains)"/><path d="M0,600 L0,450 L150,350 L250,400 L350,300 L450,250 L550,350 L650,230 L750,300 L800,250 L800,600 Z" fill="url(%23mountains)" opacity="0.7"/></svg>');
   background-size: cover;
@@ -334,18 +334,22 @@
 }
 
 .logo-overlay {
-  position: relative;
+  position: absolute;
+  bottom: -320px;
+  right: 200px;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 80px;
   height: 80px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 .logo-symbol {
   font-size: 32px;

@@ -276,8 +276,8 @@
   bottom: 0;
   background-image: linear-gradient(
     135deg,
-    rgba(6, 182, 212, 0.6) 0%,
-    rgba(14, 165, 233, 0.6) 100%
+    rgba(6, 182, 212, 0.001) 0%,
+    rgba(14, 165, 233, 0.001) 100%
   ),
   url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
   background-size: cover;

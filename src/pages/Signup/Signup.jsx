@@ -68,35 +68,32 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  setLoading(true);
+  
+  try {
+    const { success, message, error } = await signup({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password
+    });
+
+    if (success) {
+      toast.success(message || 'Account created successfully!');
+      navigate('/login'); // Will only execute if signup was successful
+    } else {
+      toast.error(error || 'Signup failed');
     }
-    
-    setLoading(true);
-    
-    try {
-      const result = await signup({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password
-      });
-      
-      if (result.success) {
-        toast.success('Account created successfully! Please sign in.');
-        navigate('/login');
-      } else {
-        toast.error(result.error || 'Signup failed');
-      }
-    } catch (error) {
-      toast.error('An unexpected error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    toast.error('An unexpected error occurred');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="signup-container">
