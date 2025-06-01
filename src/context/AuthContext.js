@@ -29,6 +29,12 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
+const logout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    setUser(null);
+  };
+
   const login = async (credentials) => {
     try {
       const response = await authService.login(credentials);
@@ -44,14 +50,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    setUser(null);
-  };
- const signup = async (userData) => {
+  
+ const signup = async (signupData) => {
   try {
-    const response = await authService.signup(userData);
+    const response = await authService.signup(signupData);
     const { token, ...userData } = response; // Assuming same response structure as login
     
     // Store token/user data if needed (like login does)
