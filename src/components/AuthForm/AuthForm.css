@@ -1,0 +1,216 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.auth-background {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mountain-illustration {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 50%, #b0e0e6 100%);
+}
+
+.mountain-layer {
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  right: 0;
+}
+
+.mountain-1 {
+  height: 300px;
+  background: linear-gradient(135deg, #4a90a4 0%, #5f9ea0 100%);
+  clip-path: polygon(0% 100%, 20% 30%, 40% 50%, 60% 20%, 80% 40%, 100% 100%);
+  z-index: 3;
+}
+
+.mountain-2 {
+  height: 250px;
+  background: linear-gradient(135deg, #708090 0%, #87ceeb 100%);
+  clip-path: polygon(0% 100%, 30% 40%, 50% 10%, 70% 35%, 100% 100%);
+  z-index: 2;
+}
+
+.mountain-3 {
+  height: 200px;
+  background: linear-gradient(135deg, #b0c4de 0%, #e6f3ff 100%);
+  clip-path: polygon(0% 100%, 25% 50%, 45% 25%, 65% 60%, 85% 30%, 100% 100%);
+  z-index: 1;
+}
+
+.lake {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(180deg, rgba(176, 224, 230, 0.8) 0%, rgba(173, 216, 230, 0.9) 100%);
+  backdrop-filter: blur(1px);
+}
+
+.trees {
+  position: absolute;
+  bottom: 30%;
+  left: 10%;
+  right: 10%;
+  height: 100px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 50px,
+    #228b22 50px,
+    #228b22 60px
+  );
+  opacity: 0.6;
+}
+
+.auth-content {
+  flex: 1;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  min-width: 500px;
+}
+
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: #3b82f6;
+  border-radius: 50%;
+  position: relative;
+}
+
+.logo-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 2px;
+}
+
+.logo-text {
+  font-weight: 600;
+  font-size: 18px;
+  color: #111827;
+}
+
+.auth-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.auth-nav a {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.auth-nav a:hover {
+  color: #3b82f6;
+}
+
+.auth-form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.auth-form-content {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-header {
+  margin-bottom: 40px;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.form-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  
+  .auth-background {
+    height: 200px;
+    flex: none;
+  }
+  
+  .auth-content {
+    min-width: auto;
+    max-width: none;
+  }
+  
+  .mountain-illustration {
+    height: 200px;
+  }
+  
+  .mountain-1,
+  .mountain-2,
+  .mountain-3 {
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-header {
+    padding: 16px 20px;
+  }
+  
+  .auth-form-container {
+    padding: 20px;
+  }
+  
+  .form-title {
+    font-size: 28px;
+  }
+  
+  .auth-background {
+    height: 150px;
+  }
+}
